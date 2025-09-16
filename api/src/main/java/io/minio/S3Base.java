@@ -618,10 +618,10 @@ public abstract class S3Base implements AutoCloseable {
     traceBuilder.append("\n");
 
     OkHttpClient httpClient = this.httpClient;
-    if (!(body instanceof byte[]) && (method == Method.PUT || method == Method.POST)) {
-      // Issue #924: disable connection retry for PUT and POST methods for other than byte array.
-      httpClient = this.httpClient.newBuilder().retryOnConnectionFailure(false).build();
-    }
+//    if (!(body instanceof byte[]) && (method == Method.PUT || method == Method.POST)) {
+//      // Issue #924: disable connection retry for PUT and POST methods for other than byte array.
+//      httpClient = this.httpClient.newBuilder().retryOnConnectionFailure(false).build();
+//    }
 
     CompletableFuture<Response> completableFuture = new CompletableFuture<>();
     httpClient
