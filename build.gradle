@@ -29,7 +29,7 @@ plugins {
 
 allprojects {
     group = 'io.minio'
-    version = '8.6.0'
+    version = '8.6.0-saooti'
     if (!project.hasProperty('release')) {
         version += '-DEV'
     }
@@ -48,7 +48,7 @@ subprojects {
     dependencies {
         api 'com.carrotsearch.thirdparty:simple-xml-safe:2.7.1'
         api 'com.google.guava:guava:33.4.8-jre'
-        api 'com.squareup.okhttp3:okhttp:5.1.0'
+        api 'com.squareup.okhttp3:okhttp-jvm:5.1.0'
         api 'com.fasterxml.jackson.core:jackson-annotations:2.19.1'
         api 'com.fasterxml.jackson.core:jackson-core:2.19.1'
         api 'com.fasterxml.jackson.core:jackson-databind:2.19.1'
@@ -216,13 +216,15 @@ project(':api') {
 
         repositories {
             maven {
-                name = 'LocalMavenWithChecksums'
-                url = uri(layout.buildDirectory.dir('staging-deploy'))
-            }
-
-            maven {
-                name = 'PreDeploy'
-                url = uri(layout.buildDirectory.dir('pre-deploy'))
+                name = 'GitLab'
+                url = 'https://gitlab.saooti.net/api/v4/projects/68/packages/maven'
+                credentials(HttpHeaderCredentials) {
+                    name = "Private-Token"
+                    value = System.getenv('MAVEN_REPO_PRIVATE_TOKEN')
+                }
+                authentication {
+                    header(HttpHeaderAuthentication)
+                }
             }
         }
     }
